@@ -1,0 +1,6 @@
+*.d
+fl_time_test_ui.cpp
+fl_time_test_ui.h
+fl_time_test_icon.h
+.vs/
+build/
