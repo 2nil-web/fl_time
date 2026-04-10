@@ -1,0 +1,23 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0404
+header_name {.h}
+code_name {.cxx}
+Function {make_window()} {open
+} {
+  Fl_Window main_window {open
+    xywh {2359 47 207 66} type Double
+    code0 {\#include "Fl_Time_Input.h"} visible
+  } {
+    Fl_Group {} {open
+      xywh {48 18 118 26}
+    } {
+      Fl_Input my_time {
+        xywh {50 20 92 22} labeltype NO_LABEL when 1
+        class Fl_Time_Input
+      }
+      Fl_Button time_button {
+        tooltip {Display time selector} image {clock.svg} compress_image 1 xywh {144 21 20 20} box THIN_UP_BOX
+      }
+    }
+  }
+}
