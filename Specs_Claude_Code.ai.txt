@@ -28,20 +28,9 @@ Il y a un problème d'affichage du widget qui a tendance à apparaitre et dispar
 
 Futures specs :
 1) Rendre le choix du système horaire paramètrable entre : "Système horaire sur 12 heures (AM/PM)" et "Système horaire sur 24 heures".
-2) Et ajouter aussi la possibilité paramètrable de gérer aussi les millisecondes avec le format "HH:MM:SS.SSS". Soit par exemple : "22:30:23.234"
+2) Et ajouter aussi la possibilité, paramètrable, de gérer les millisecondes avec le format "HH:MM:SS.SSS".
 3) Evite les commentaire multi-ligne du genre :
 // Début du commentaire \
 //  suite du commentaire
-4) Enrobe les include des headers fltk du style :
-#ifdef _MSVC_LANG
-#pragma warning(push, 0)
-#endif
-#include <FL/Fl.H>
-#include <FL/Fl_Box.H>
-#include <FL/Fl_Group.H>
-#include <FL/Fl_Window.H>
-#include <FL/fl_draw.H>
-#ifdef _MSVC_LANG
-#pragma warning(pop)
-#endif
+4) Remplace les "#pragma once" non standard par des "#ifndef MY_HEADER_H"
 

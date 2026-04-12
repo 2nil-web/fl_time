@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FL_TIME_FONT_METRICS_H
+#define FL_TIME_FONT_METRICS_H
 // ============================================================
 // TimeFontMetrics.H
 // Dimensions dérivées de la police, partagées par
@@ -31,3 +32,4 @@ struct TimeFontMetrics {
         sep_w   = (int)fl_width(":")     + pad;
     }
 };
+#endif /* FL_TIME_FONT_METRICS_H */

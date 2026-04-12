@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FL_TIME_PICKER_H
+#define FL_TIME_PICKER_H
 // ============================================================
 // Fl_Time_Picker.H
 // Fenêtre popup à colonnes déroulantes (HH / MM / SS / AM-PM).
@@ -65,3 +66,4 @@ private:
     int ok_x() const { return (w() - btn_w_) / 2; }
     int btn_y() const { return h() - footer_h_ + (footer_h_ - btn_h_) / 2; }
 };
+#endif /* FL_TIME_PICKER_H */

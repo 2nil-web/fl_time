@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FL_TIME_INPUT_H
+#define FL_TIME_INPUT_H
 // ============================================================
 // Fl_Time_Input.H
 // Widget FLTK imitant le <input type="time"> de Chrome.
@@ -7,8 +8,7 @@
 //
 // Dépendances : FLTK 1.3 ou 1.4
 // Compilation :
-//   g++ main.cpp Fl_Time_Picker.cpp Fl_Time_Input.cpp \
-//       -o demo $(fltk-config --cxxflags --ldflags)
+//   g++ main.cpp Fl_Time_Picker.cpp Fl_Time_Input.cpp -o demo $(fltk-config --cxxflags --ldflags)
 // ============================================================
 #include <FL/Fl_Group.H>
 #include "TimeFontMetrics.H"
@@ -85,3 +85,4 @@ private:
     void open_picker();
     void fire_callback();
 };
+#endif /* FL_TIME_INPUT_H */

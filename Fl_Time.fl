@@ -4,12 +4,12 @@ header_name {.h}
 code_name {.cxx}
 Function {make_window()} {open
 } {
-  Fl_Window main_window {open
+  Fl_Window main_window {open selected
     xywh {2359 47 207 106} type Double labelfont 4 labelsize 12 resizable
     code0 {\#include "Fl_Time_Input.H"} visible
   } {
-    Fl_Group ti {open selected
-      xywh {25 25 200 24} box DOWN_FRAME color 24 labelfont 4 labelsize 12 resizable
+    Fl_Group ti {open
+      xywh {25 25 170 24} box DOWN_FRAME color 24 labelfont 4 labelsize 12 resizable
       class Fl_Time_Input
     } {}
   }
