@@ -147,15 +147,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Fl_Time_Picker.cpp" />
     <ClCompile Include="Fl_Time_Input.cpp" />
-    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="Fl_Time.cpp" />
     <ClCompile Include="fl_time_test.cpp" />
-    <ClCompile Include="fl_time_test_ui.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Fl_Time_Input.h" />
-    <ClCompile Include="utils.h" />
-    <ClInclude Include="fl_time_test_ui.h" />
+    <ClCompile Include="TimeFontMetrics.H" />
+    <ClCompile Include="Fl_Time_Picker.H" />
+    <ClCompile Include="Fl_Time_Input.H" />
+    <ClInclude Include="Fl_Time.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="fl_time_test.rc" />

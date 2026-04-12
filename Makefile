@@ -1,7 +1,7 @@
 
 UNAME=$(shell uname)
 
-SRCS=fl_time_test_ui.cpp fl_time_test.cpp utils.cpp Fl_Time_Input.cpp
+SRCS=Fl_Time_Picker.cpp Fl_Time_Input.cpp Fl_Time.cpp fl_time_test.cpp
 
 ifeq ($(findstring NT-, $(UNAME)),)
 #FLTK_DIR=/opt/fltk-1.5
@@ -46,11 +46,11 @@ all : ${TARGET}
 gcc : ${TARGET}
 
 # FLUID file rules
-fl_time_test_ui.h fl_time_test_ui.cpp : fl_time_test_ui.fl
+Fl_Time.h Fl_Time.cpp : Fl_Time.fl
 	@echo "Fluid Gen"
 	${FLUID} -c -o .cpp $<
 
-fl_time_test.cpp file_features.cpp edit_features.cpp : fl_time_test_ui.h fl_time_test_icon.h fl_time_test.ico
+fl_time_test.cpp file_features.cpp edit_features.cpp : Fl_Time.h fl_time_test_icon.h fl_time_test.ico
 
 #	@fold -w 253 fl_time_test.svg | sed -e 's/"/\\"/g;s/\(.*\)/"\1" \\/' >>fl_time_test_icon.h
 fl_time_test_icon.h : fl_time_test.svg
@@ -106,7 +106,7 @@ cfg :
 
 clean :
 	 rm -rf build/msvc build/gcc
-	 rm -f $(OBJS) $(SRCS:.cpp=.d) fl_time_test_ui.h fl_time_test_ui.cpp fl_time_test_icon.h *~
+	 rm -f $(OBJS) $(SRCS:.cpp=.d) Fl_Time.h Fl_Time.cpp fl_time_test_icon.h *~
 
 ifneq ($(MAKECMDGOALS),clean)
 # Implicit rule for building dep file from .c

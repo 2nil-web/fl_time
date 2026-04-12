@@ -1,0 +1,47 @@
+Peux-tu m'aider à développer un Widget FLTK qui mime le comportement du time input de chrome, notamment le bouton qui affiche le sélecteur d'heure.
+
+Ton implémentation est plutôt bonne mais elle comporte quelques bug, puis-je te soumettre mes remarques ?
+1) La popup ne s'ouvre pas sous le champ Fl_Time_Input - OK
+2) Les valeurs des colonnes de la popup déborde sur ses entêtes et pieds. - OK
+3) Quand on arrive aux limites des valeurs d'une colonne de la popup, plus rien ne s'affiche, je pense qu'il faudrait cycler sur les valeurs. - OK
+4) La sélection des valeurs de la popup ne s'affiche pas correctement dans le champ Fl_Time_Input
+Par contre des caractéres bizarre s'affiche à la place du texte "Utilisez Tab/flèches ou le sélecteur"
+09
+Les bugs de ma liste 1 à 3, semblent bien corrigés.
+Par contre le bug 4 ne l'est que partiellement :
+a) La sélection des valeurs de la popup ne s'affiche toujours pas correctement dans le champ Fl_Time_Input
+b) Le texte "Utilisez Tab/flèches ou le sélecteur" est correctement remplacé mais par les même valeurs erronées que le champ Fl_Time_Input
+
+La sélection des valeurs de la popup ne s'affiche toujours pas correctement dans le champ Fl_Time_Input, par exemple quand je sélectionne "01:00:00:PM", il m'affiche 11:58:58: PM".
+
+Je suis désolé mais le bug persiste. Par exemple la sélection "11:11:11 PM" dans la popup devient "09:09:09 PM" dans le champ. Il y a donc toujours ce décalage négatif de 2 unités pour chacune des valeurs heure, minute et secondes
+
+Rendre ce widget proportionnel à la police de caractères que l'on lui assigne.
+
+Mais figer les dimensions du widget à cette proportion.
+
+Quelques comportements à corriger :
+1) La largeur du widget n'est pas figée comme je le souhaitais aussi.
+2) Gérer un peu mieux la popup "Time_Picker" afin qu'elle s'efface automatiquement quand on clique à l'extérieur d'elle. Et donc dans ce cas adopter le comportement du bouton "Annuler" qu'il sera donc inutile d'afficher.
+
+Il y a un problème d'affichage du widget qui a tendance à apparaitre et disparaitre de manière erratique.
+
+Futures specs :
+1) Rendre le choix du système horaire paramètrable entre : "Système horaire sur 12 heures (AM/PM)" et "Système horaire sur 24 heures".
+2) Et ajouter aussi la possibilité paramètrable de gérer aussi les millisecondes avec le format "HH:MM:SS.SSS". Soit par exemple : "22:30:23.234"
+3) Evite les commentaire multi-ligne du genre :
+// Début du commentaire \
+//  suite du commentaire
+4) Enrobe les include des headers fltk du style :
+#ifdef _MSVC_LANG
+#pragma warning(push, 0)
+#endif
+#include <FL/Fl.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Group.H>
+#include <FL/Fl_Window.H>
+#include <FL/fl_draw.H>
+#ifdef _MSVC_LANG
+#pragma warning(pop)
+#endif
+
