@@ -19,9 +19,8 @@ MAGICK=magick
 EXEXT=.exe
 FLTK_DIR=/c/fltk-1.4.4
 TARGET_DIR=build/msvc/win
-OBJS=$(SRCS:.cpp=.obj)
-OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 BUILD_SYS=msvc
+endif
 
 ifeq ($(MAKECMDGOALS),gcc)
 undefine MSBUILD
@@ -29,8 +28,6 @@ MAGICK=magick
 EXEXT=.exe
 FLTK_DIR=/ucrt64
 TARGET_DIR=build/gcc/win
-OBJS=$(SRCS:.cpp=.o)
-OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 BUILD_SYS=gcc
 ifeq ($(MSYSTEM),CLANG64)
 CPPFLAGS += -I /clang64/include/c++
@@ -39,7 +36,6 @@ endif
 LDFLAGS += -static
 #LDFLAGS += -static-libgcc -static-libstdc++
 CPPFLAGS += -DUNICODE -D_UNICODE 
-endif
 endif
 
 FLTK_CONFIG=${FLTK_DIR}/bin/fltk-config
@@ -70,11 +66,15 @@ fl_time_test.ico : fl_time_test.svg
 
 
 ifeq ($(BUILD_SYS),msvc)
+OBJS=$(SRCS:.cpp=.obj)
+OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 MSVC_SLN=fl_time_test.slnx
 ${TARGET} : ${SRCS}
 	@${MSBUILD} ${MSVC_SLN} -p:Configuration=Release
 	@echo "${TARGET} OK"
 else
+OBJS=$(SRCS:.cpp=.o)
+OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 CC  = $(shell ${FLTK_CONFIG} --cc)
 CXX = $(shell ${FLTK_CONFIG} --cxx)
 CXXFLAGS += -std=c++23
