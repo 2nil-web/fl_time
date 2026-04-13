@@ -10,7 +10,7 @@
 // Constructeur / destructeur
 // ----------------------------------------------------------------
 
-Fl_Time_Input::Fl_Time_Input(int X, int Y, int W, int H, bool use24, bool show_ms, const char *lbl)
+Fl_Time_Input::Fl_Time_Input(int X, int Y, int W, int H, const char *lbl, bool use24, bool show_ms)
     : Fl_Group(X, Y, W, H, lbl), h_(use24 ? 0 : 12), m_(0), s_(0), ms_(0), pm_(false), use24_(use24), show_ms_(show_ms), active_seg_(SEG_NONE), digit_count_(0), digit_accum_(0), picker_(nullptr), user_cb_(nullptr), user_data_(nullptr)
 {
   end();

@@ -27,9 +27,9 @@ public:
     // use24  : true = horloge 24h, false = 12h AM/PM (défaut)
     // show_ms: true = affiche HH:MM:SS.mmm
     Fl_Time_Input(int x, int y, int w, int h,
+                  const char* label = nullptr,
                   bool use24   = false,
-                  bool show_ms = false,
-                  const char* label = nullptr);
+                  bool show_ms = false);
     ~Fl_Time_Input();
 
     // Reconfiguration dynamique (appelle fit() en interne).

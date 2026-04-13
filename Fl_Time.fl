@@ -5,21 +5,30 @@ code_name {.cxx}
 Function {make_window()} {open
 } {
   Fl_Window main_window {open
-    xywh {2359 47 394 175} type Double labelfont 4 labelsize 12 resizable
+    xywh {2359 47 445 279} type Double resizable
     code0 {\#include "Fl_Time_Input.H"} visible
   } {
-    Fl_Group ti_def {open
-      xywh {25 25 200 24} box DOWN_FRAME color 24 labelfont 4 labelsize 12
+    Fl_Group ti_def {
+      label {Time input default} selected
+      xywh {218 25 200 24} align 4
       class Fl_Time_Input
     } {}
-    Fl_Group ti_24 {open
-      xywh {25 55 200 24} box DOWN_FRAME color 24 labelfont 4 labelsize 12
+    Fl_Group ti_24 {
+      label {Time input 24 hours} selected
+      xywh {218 85 200 24} align 4
       code0 {ti_24->set_mode(true, false);}
       class Fl_Time_Input
     } {}
-    Fl_Group ti_ms {open
-      xywh {25 85 200 24} box DOWN_FRAME color 24 labelfont 4 labelsize 12 resizable
+    Fl_Group ti_ms {
+      label {Time input milliseconds} selected
+      xywh {218 145 200 24} align 4
       code0 {ti_ms->set_mode(false, true);}
+      class Fl_Time_Input
+    } {}
+    Fl_Group ti_ms_24 {
+      label {Time input 24 hours, milliseconds} selected
+      xywh {218 205 200 24} align 4
+      code0 {ti_ms->set_mode(true, true);}
       class Fl_Time_Input
     } {}
   }
