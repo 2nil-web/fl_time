@@ -42,3 +42,6 @@ Il y a un problème d'affichage du widget qui a tendance à apparaitre et dispar
 1) Le copier/coller ne fonctionne toujours pas, peux-tu le corriger ?
 2) Si possible, il faudrait aussi permettre la saisie des chiffres avec le pavé numérique.
 3) Les colonnes de la popup Time_Picker ne sont pas alignées sur celle de l'affichage et elles sont même souvent tronquées.
+
+Formidable, ça fonctionne trés bien !
+

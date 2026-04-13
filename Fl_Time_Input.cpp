@@ -177,7 +177,7 @@ void Fl_Time_Input::format_clipboard(char *buf, int bufsz) const
 bool Fl_Time_Input::parse_clipboard(const char *str)
 {
   int hh = 0, mm = 0, ss = 0, mss = 0;
-  int n = sscanf(str, "%d:%d:%d.%d", &hh, &mm, &ss, &mss);
+  int n = sscanf_s(str, "%d:%d:%d.%d", &hh, &mm, &ss, &mss);
   if (n < 3)
     return false;
   if (use24_)
