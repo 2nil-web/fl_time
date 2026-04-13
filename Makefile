@@ -1,7 +1,9 @@
 
 UNAME=$(shell uname)
 
-SRCS=Fl_Time_Picker.cpp Fl_Time_Input.cpp Fl_Time.cpp fl_time_test.cpp
+PREFIX=Fl_Time_Input_Use_Example
+#PREFIX=fl_time_test
+SRCS=${PREFIX}.cpp Fl_Time_Input.cpp Fl_Time_Picker.cpp Fl_Time.cpp
 
 ifeq ($(findstring NT-, $(UNAME)),)
 #FLTK_DIR=/opt/fltk-1.5
@@ -17,8 +19,9 @@ MAGICK=magick
 EXEXT=.exe
 FLTK_DIR=/c/fltk-1.4.4
 TARGET_DIR=build/msvc/win
+OBJS=$(SRCS:.cpp=.obj)
+OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 BUILD_SYS=msvc
-endif
 
 ifeq ($(MAKECMDGOALS),gcc)
 undefine MSBUILD
@@ -26,6 +29,8 @@ MAGICK=magick
 EXEXT=.exe
 FLTK_DIR=/ucrt64
 TARGET_DIR=build/gcc/win
+OBJS=$(SRCS:.cpp=.o)
+OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 BUILD_SYS=gcc
 ifeq ($(MSYSTEM),CLANG64)
 CPPFLAGS += -I /clang64/include/c++
@@ -34,6 +39,7 @@ endif
 LDFLAGS += -static
 #LDFLAGS += -static-libgcc -static-libstdc++
 CPPFLAGS += -DUNICODE -D_UNICODE 
+endif
 endif
 
 FLTK_CONFIG=${FLTK_DIR}/bin/fltk-config
@@ -50,7 +56,7 @@ Fl_Time.h Fl_Time.cpp : Fl_Time.fl
 	@echo "Fluid Gen"
 	${FLUID} -c -o .cpp $<
 
-fl_time_test.cpp file_features.cpp edit_features.cpp : Fl_Time.h fl_time_test_icon.h fl_time_test.ico
+${PREFIX}.cpp file_features.cpp edit_features.cpp : Fl_Time.h fl_time_test_icon.h fl_time_test.ico
 
 #	@fold -w 253 fl_time_test.svg | sed -e 's/"/\\"/g;s/\(.*\)/"\1" \\/' >>fl_time_test_icon.h
 fl_time_test_icon.h : fl_time_test.svg
@@ -64,15 +70,11 @@ fl_time_test.ico : fl_time_test.svg
 
 
 ifeq ($(BUILD_SYS),msvc)
-OBJS=$(SRCS:.cpp=.obj)
-OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 MSVC_SLN=fl_time_test.slnx
 ${TARGET} : ${SRCS}
 	@${MSBUILD} ${MSVC_SLN} -p:Configuration=Release
 	@echo "${TARGET} OK"
 else
-OBJS=$(SRCS:.cpp=.o)
-OBJS:=$(addprefix  ${TARGET_DIR}/,${OBJS})
 CC  = $(shell ${FLTK_CONFIG} --cc)
 CXX = $(shell ${FLTK_CONFIG} --cxx)
 CXXFLAGS += -std=c++23

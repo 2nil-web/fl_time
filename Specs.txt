@@ -26,11 +26,19 @@ Quelques comportements à corriger :
 
 Il y a un problème d'affichage du widget qui a tendance à apparaitre et disparaitre de manière erratique.
 
-Futures specs :
-1) Rendre le choix du système horaire paramètrable entre : "Système horaire sur 12 heures (AM/PM)" et "Système horaire sur 24 heures".
-2) Et ajouter aussi la possibilité, paramètrable, de gérer les millisecondes avec le format "HH:MM:SS.SSS".
-3) Evite les commentaire multi-ligne du genre :
+1) Améliorer la saisie numérique :
+  a) En permettant le défilement de gauche à droite au fur et à mesure de la saisie.
+  b) En ajoutant la possibilité de copier/coller toute ou partie de la valeur horaire du widget.
+2) Rendre le choix du système horaire paramètrable entre : "Système horaire sur 12 heures (AM/PM)" et "Système horaire sur 24 heures", à travers un paramètre supplémentaire du constructeur et/ou une méthode de configuration.
+3) Ajouter la possibilité de prendre en compte les millisecondes avec le format "HH:MM:SS.SSS", là aussi paramètrable de via un paramètre supplémentaire du constructeur et/ou une méthode de configuration.
+4) Aligner les colonnes de la popup sur celles du widget.
+5) Dans le code :
+  a) Eviter les commentaire multi-ligne du genre :
 // Début du commentaire \
 //  suite du commentaire
-4) Remplace les "#pragma once" non standard par des "#ifndef MY_HEADER_H"
+  b) Remplacer les "#pragma once" non standard par des "#ifndef MY_HEADER_H"
 
+
+1) Le copier/coller ne fonctionne toujours pas, peux-tu le corriger ?
+2) Si possible, il faudrait aussi permettre la saisie des chiffres avec le pavé numérique.
+3) Les colonnes de la popup Time_Picker ne sont pas alignées sur celle de l'affichage et elles sont même souvent tronquées.

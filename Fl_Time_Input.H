@@ -1,58 +1,70 @@
 #ifndef FL_TIME_INPUT_H
 #define FL_TIME_INPUT_H
-// ============================================================
 // Fl_Time_Input.H
-// Widget FLTK imitant le <input type="time"> de Chrome.
-// Toutes les dimensions sont proportionnelles à la police
-// assignée via labelfont() / labelsize().
+// Widget FLTK imitant <input type="time"> de Chrome.
+// Dimensions proportionnelles à la police (labelfont/labelsize).
+// Système horaire et millisecondes configurables.
 //
-// Dépendances : FLTK 1.3 ou 1.4
 // Compilation :
-//   g++ main.cpp Fl_Time_Picker.cpp Fl_Time_Input.cpp -o demo $(fltk-config --cxxflags --ldflags)
-// ============================================================
+//   g++ main.cpp Fl_Time_Picker.cpp Fl_Time_Input.cpp \
+//       -o demo $(fltk-config --cxxflags --ldflags)
 #include <FL/Fl_Group.H>
 #include "TimeFontMetrics.H"
 #include "Fl_Time_Picker.H"
 
-enum TimeSegment { SEG_HOUR = 0, SEG_MIN, SEG_SEC, SEG_AMPM, SEG_NONE };
+// Segments logiques. SEG_MS et SEG_AMPM peuvent être absents selon config.
+enum TimeSegment {
+    SEG_HOUR = 0,
+    SEG_MIN  = 1,
+    SEG_SEC  = 2,
+    SEG_MS   = 3,   // millisecondes (optionnel)
+    SEG_AMPM = 4,   // AM/PM (optionnel, absent en mode 24h)
+    SEG_NONE = 5
+};
 
 class Fl_Time_Input : public Fl_Group {
 public:
-    Fl_Time_Input(int x, int y, int w, int h, const char* label = nullptr);
+    // use24  : true = horloge 24h, false = 12h AM/PM (défaut)
+    // show_ms: true = affiche HH:MM:SS.mmm
+    Fl_Time_Input(int x, int y, int w, int h,
+                  bool use24   = false,
+                  bool show_ms = false,
+                  const char* label = nullptr);
     ~Fl_Time_Input();
 
-    // Valeur courante
-    void set_time(int hour12, int min, int sec, bool pm);
-    int  hour12() const { return h_; }
+    // Reconfiguration dynamique (appelle fit() en interne).
+    void set_mode(bool use24, bool show_ms);
+
+    // Valeur — h est toujours 0..23 en mode 24h, 1..12 en mode 12h.
+    void set_time(int hour, int min, int sec, int ms = 0, bool pm = false);
+    int  hour()   const { return h_; }
     int  minute() const { return m_; }
     int  second() const { return s_; }
+    int  millis() const { return ms_; }
     bool is_pm()  const { return pm_; }
-    int  hour24() const {
-        return pm_ ? (h_ == 12 ? 12 : h_ + 12)
-                   : (h_ == 12 ?  0 : h_);
-    }
+    // Toujours en 24h quelle que soit la config.
+    int  hour24() const;
 
-    // Police : utilisez labelfont() / labelsize() hérités de Fl_Widget.
-    // Le picker se synchronise automatiquement à chaque ouverture.
+    // Copie la valeur courante dans le presse-papier (format HH:MM:SS[.mmm]).
+    void copy_value();
+    // Tente de coller depuis le presse-papier.
+    void paste_value();
 
-    // Retourne la taille exacte requise par la police courante.
-    // Appelez après labelfont()/labelsize(), avant show().
     void preferred_size(int& pw, int& ph) const;
-
-    // Redimensionne le widget à preferred_size() en conservant x() et y().
     void fit();
-
-    // Surcharge resize() pour imposer preferred_size() :
-    // accepte x/y librement, mais corrige w/h à la taille calculée.
     void resize(int x, int y, int w, int h) override;
 
-    // Callback déclenché à chaque modification de la valeur.
     void callback(Fl_Callback* cb, void* data = nullptr);
 
 private:
-    int         h_, m_, s_;
+    int         h_, m_, s_, ms_;
     bool        pm_;
+    bool        use24_;
+    bool        show_ms_;
     TimeSegment active_seg_;
+    // Pendant la saisie numérique : chiffres déjà entrés (0..3).
+    int         digit_count_;
+    int         digit_accum_;
 
     Fl_Time_Picker* picker_;
     Fl_Callback*    user_cb_;
@@ -60,12 +72,20 @@ private:
 
     TimeFontMetrics fm_;
 
-    // Géométrie interne recalculée à chaque draw / handle.
+    // Nombre de segments visibles (3, 4 ou 5).
+    int nseg() const;
+    // Valeur maximale du segment actif.
+    int seg_max(TimeSegment s) const;
+    // Prochain / précédent segment valide.
+    TimeSegment next_seg(TimeSegment s) const;
+    TimeSegment prev_seg(TimeSegment s) const;
+
     struct Rects {
-        int fx, fy, fw, fh;        // champ texte
-        int sx, sy, sw, sh;        // bouton spin
-        int cx, cy, cw, ch;        // bouton horloge
-        int seg_x[4], seg_w[4];    // segments HH MM SS AM/PM
+        int fx, fy, fw, fh;
+        int sx, sy, sw, sh;
+        int cx, cy, cw, ch;
+        int seg_x[5], seg_w[5];
+        int nseg;
     } r_;
 
     void measure_font();
@@ -79,10 +99,17 @@ private:
     void draw_clock_button(int x, int y, int w, int h);
 
     void activate_segment(TimeSegment s);
-    void next_segment();
-    void prev_segment();
     void increment(int delta);
+    void commit_digit(int digit);
+    void flush_digit();
     void open_picker();
     void fire_callback();
+    void clamp_values();
+
+    // Formate la valeur courante en chaîne pour le presse-papier.
+    void format_clipboard(char* buf, int bufsz) const;
+    // Parse une chaîne du presse-papier et met à jour h_..ms_, pm_.
+    bool parse_clipboard(const char* str);
 };
-#endif /* FL_TIME_INPUT_H */
+
+#endif // FL_TIME_INPUT_H
